@@ -577,11 +577,11 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
       </div>
       <div class="g-card reveal">
         <div class="g-thumb">
-          <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80" alt="ファンアートイラスト — キャラクター彩色イラスト" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80" alt="Live2Dイラスト — AINEキャラクターLive2D制作" loading="lazy">
         </div>
         <div class="g-info">
-          <div class="g-title">ファンアート</div>
-          <div class="g-tags"><span class="g-tag">ファンアート</span><span class="g-tag">Procreate</span></div>
+          <div class="g-title">Live2D イラスト制作</div>
+          <div class="g-tags"><span class="g-tag">Live2D</span><span class="g-tag">Procreate</span></div>
         </div>
       </div>
       <div class="g-card reveal">
@@ -622,16 +622,23 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
           </div>
         </div>
       </div>
-      <div class="g-card reveal">
-        <div class="g-thumb">
-          <div class="anim-ph">
+      <div class="g-card reveal" id="galleryLive2dCard">
+        <div class="g-thumb" style="position:relative;background:linear-gradient(135deg,var(--marine-100),var(--marine-200))">
+          <!-- Live2D ギャラリー用キャンバス -->
+          <canvas id="galleryLive2dCanvas" style="position:absolute;inset:0;width:100%!important;height:100%!important"></canvas>
+          <!-- 読み込み前フォールバック -->
+          <div id="galleryLive2dFallback" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px">
             <div class="play-btn" aria-hidden="true"></div>
-            <p>Live2D アニメーション</p>
+            <p style="font-family:var(--f-d);font-weight:700;font-size:11px;color:var(--marine-600);letter-spacing:.08em">Live2D — AINEちゃん</p>
+          </div>
+          <!-- 動いてる表示バッジ -->
+          <div id="galleryLive2dBadge" style="display:none;position:absolute;top:10px;right:10px;background:var(--green-bg);border:1.5px solid var(--green);border-radius:var(--r-pill);padding:3px 10px;font-family:var(--f-d);font-weight:700;font-size:10px;color:var(--green);letter-spacing:.08em;backdrop-filter:blur(4px)">
+            ● LIVE
           </div>
         </div>
         <div class="g-info">
           <div class="g-title">Live2D キャラアニメ</div>
-          <div class="g-tags"><span class="g-tag">Live2D</span><span class="g-tag">キャラ</span></div>
+          <div class="g-tags"><span class="g-tag">Live2D</span><span class="g-tag">Procreate</span><span class="g-tag">マウス追従</span></div>
         </div>
       </div>
       <div class="g-card reveal">
@@ -876,7 +883,7 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
         <div class="av-deco av-deco-1"></div>
         <div class="av-deco av-deco-2"></div>
         <div class="avatar-ring">
-          <img src="./HPicon.png" alt="AINEのプロフィールイラスト">
+          <img src="/mnt/user-data/uploads/HPicon.png" alt="AINEのプロフィールイラスト">
         </div>
       </div>
       <div class="reveal">
@@ -1221,6 +1228,81 @@ function loadScript(src) {
     document.head.appendChild(s);
   });
 }
+
+/* ════════════════════════════════════════
+   ギャラリー用 Live2D
+   アニメタブを開いたとき1回だけ初期化
+════════════════════════════════════════ */
+let galleryLive2dReady = false;
+
+async function initGalleryLive2d() {
+  if (galleryLive2dReady) return;
+  galleryLive2dReady = true;
+
+  const canvas   = document.getElementById('galleryLive2dCanvas');
+  const fallback = document.getElementById('galleryLive2dFallback');
+  const badge    = document.getElementById('galleryLive2dBadge');
+  const card     = document.getElementById('galleryLive2dCard');
+  if (!canvas) return;
+
+  try {
+    await loadScript('https://cdn.jsdelivr.net/npm/pixi.js@7/dist/pixi.min.js');
+    await loadScript('https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism4.min.js');
+  } catch(e) { return; }
+
+  if (typeof PIXI === 'undefined' || !PIXI.live2d) return;
+
+  const size = canvas.parentElement.offsetWidth;
+  canvas.width  = size;
+  canvas.height = size;
+
+  const app = new PIXI.Application({
+    view: canvas,
+    width: size, height: size,
+    transparent: true, backgroundAlpha: 0,
+    antialias: true,
+    resolution: window.devicePixelRatio || 1,
+    autoDensity: true,
+  });
+
+  let model;
+  try {
+    model = await PIXI.live2d.Live2DModel.from(LIVE2D_MODEL_PATH);
+  } catch(e) { return; }
+
+  app.stage.addChild(model);
+
+  const sc = Math.min(size / model.width, size / model.height) * 0.88;
+  model.scale.set(sc);
+  model.x = (size - model.width  * sc) / 2;
+  model.y = (size - model.height * sc) / 2;
+
+  // マウス追従
+  card.addEventListener('mousemove', e => model.focus(e.clientX, e.clientY));
+  // タップでモーション
+  canvas.addEventListener('pointerdown', () => model.motion('tap_body'));
+
+  // 成功 → フォールバック非表示・LIVEバッジ表示
+  if (fallback) fallback.style.display = 'none';
+  if (badge)   badge.style.display = 'block';
+
+  window.addEventListener('resize', () => {
+    const s = card.offsetWidth;
+    app.renderer.resize(s, s);
+    const sc2 = Math.min(s / model.internalModel.originalWidth,
+                         s / model.internalModel.originalHeight) * 0.88;
+    model.scale.set(sc2);
+    model.x = (s - model.internalModel.originalWidth  * sc2) / 2;
+    model.y = (s - model.internalModel.originalHeight * sc2) / 2;
+  });
+}
+
+// アニメタブが押されたときに呼び出す
+document.querySelectorAll('.g-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    if (tab.dataset.tab === 'anim') initGalleryLive2d();
+  });
+});
 </script>
 </body>
 </html>
