@@ -656,14 +656,17 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
     </div>
 
     <div class="gallery-grid hidden" id="grid-anim" role="tabpanel" aria-label="アニメーション作品">
-      <!-- 教育アニメ → YouTubeリンクカード -->
-      <a href="https://youtu.be/9rdw_m9gRsk?si=3GCXoKuh4NvlqD-C" target="_blank" rel="noopener"
-         class="g-card g-card-wide reveal" style="text-decoration:none">
-        <div class="g-thumb g-thumb-wide">
-          <div class="anim-ph" style="background:linear-gradient(135deg,#1a4a2e,#2a8a4e,#4acc7a)">
-            <div class="play-btn" aria-hidden="true"></div>
-            <p>にゃんたと学ぶ お金のヒミツ</p>
-          </div>
+      <!-- 教育アニメ → YouTube iframe埋め込み -->
+      <div class="g-card g-card-wide reveal">
+        <div class="g-thumb g-thumb-wide" style="background:#000;position:relative">
+          <iframe
+            src="https://www.youtube.com/embed/9rdw_m9gRsk"
+            title="教育アニメ「にゃんたと学ぶ知っておきたいお金のヒミツ」"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            style="position:absolute;inset:0;width:100%;height:100%;border:none">
+          </iframe>
         </div>
         <div class="g-info">
           <div class="g-title">教育アニメ「にゃんたと学ぶ知っておきたいお金のヒミツ」<span class="g-self-badge">公開中</span></div>
@@ -674,7 +677,7 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
             <span class="g-tag">お金の学習</span>
           </div>
         </div>
-      </a>
+      </div>
       <!-- Live2Dアニメ → aine.mp4動画 -->
       <div class="g-card reveal">
         <div class="g-thumb">
@@ -687,16 +690,14 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
           <div class="g-tags"><span class="g-tag">Live2D</span><span class="g-tag">Illustrator</span></div>
         </div>
       </div>
+      <!-- GIFアニメ → AINEgif.gif -->
       <div class="g-card reveal">
         <div class="g-thumb">
-          <div class="anim-ph">
-            <div class="play-btn" aria-hidden="true"></div>
-            <p>GIFアニメーション</p>
-          </div>
+          <img src="./AINEgif.gif" alt="GIFアニメーション — AINEキャラクターアニメーション" style="width:100%;height:100%;object-fit:cover">
         </div>
         <div class="g-info">
-          <div class="g-title">GIFアニメ（スタンプ）</div>
-          <div class="g-tags"><span class="g-tag">GIF</span><span class="g-tag">Blender</span></div>
+          <div class="g-title">GIFアニメーション</div>
+          <div class="g-tags"><span class="g-tag">GIF</span><span class="g-tag">Procreate</span></div>
         </div>
       </div>
     </div>
