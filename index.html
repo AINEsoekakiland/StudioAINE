@@ -656,7 +656,9 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
     </div>
 
     <div class="gallery-grid hidden" id="grid-anim" role="tabpanel" aria-label="アニメーション作品">
-      <div class="g-card g-card-wide reveal">
+      <!-- 教育アニメ → YouTubeリンクカード -->
+      <a href="https://youtu.be/9rdw_m9gRsk?si=3GCXoKuh4NvlqD-C" target="_blank" rel="noopener"
+         class="g-card g-card-wide reveal" style="text-decoration:none">
         <div class="g-thumb g-thumb-wide">
           <div class="anim-ph" style="background:linear-gradient(135deg,#1a4a2e,#2a8a4e,#4acc7a)">
             <div class="play-btn" aria-hidden="true"></div>
@@ -672,24 +674,17 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
             <span class="g-tag">お金の学習</span>
           </div>
         </div>
-      </div>
-      <div class="g-card reveal" id="galleryLive2dCard">
-        <div class="g-thumb" style="position:relative;background:linear-gradient(135deg,var(--marine-100),var(--marine-200))">
-          <!-- Live2D ギャラリー用キャンバス -->
-          <canvas id="galleryLive2dCanvas" style="position:absolute;inset:0;width:100%!important;height:100%!important"></canvas>
-          <!-- 読み込み前フォールバック -->
-          <div id="galleryLive2dFallback" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px">
-            <div class="play-btn" aria-hidden="true"></div>
-            <p style="font-family:var(--f-d);font-weight:700;font-size:11px;color:var(--marine-600);letter-spacing:.08em">Live2D — AINEちゃん</p>
-          </div>
-          <!-- 動いてる表示バッジ -->
-          <div id="galleryLive2dBadge" style="display:none;position:absolute;top:10px;right:10px;background:var(--green-bg);border:1.5px solid var(--green);border-radius:var(--r-pill);padding:3px 10px;font-family:var(--f-d);font-weight:700;font-size:10px;color:var(--green);letter-spacing:.08em;backdrop-filter:blur(4px)">
-            ● LIVE
-          </div>
+      </a>
+      <!-- Live2Dアニメ → aine.mp4動画 -->
+      <div class="g-card reveal">
+        <div class="g-thumb">
+          <video autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover">
+            <source src="./aine.mp4" type="video/mp4">
+          </video>
         </div>
         <div class="g-info">
           <div class="g-title">Live2D キャラアニメ</div>
-          <div class="g-tags"><span class="g-tag">Live2D</span><span class="g-tag">Procreate</span><span class="g-tag">マウス追従</span></div>
+          <div class="g-tags"><span class="g-tag">Live2D</span><span class="g-tag">Illustrator</span></div>
         </div>
       </div>
       <div class="g-card reveal">
