@@ -122,6 +122,10 @@ header nav a:hover,header nav a.active{background:var(--marine-100);color:var(--
 .hero-placeholder .emo{font-size:clamp(56px,10vw,88px);animation:gentleBounce 3s ease-in-out infinite}
 .hero-placeholder p{font-family:var(--f-d);font-weight:700;font-size:12px;color:var(--marine-600);letter-spacing:.08em}
 @keyframes gentleBounce{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(3deg)}}
+@keyframes elec1{0%,100%{opacity:1;transform:scale(1)}45%{opacity:.1;transform:scale(.7)}50%{opacity:1;transform:scale(1.2)}55%{opacity:.1}60%{opacity:1}}
+@keyframes elec2{0%,100%{opacity:.8;transform:scale(1)}30%{opacity:.05;transform:scale(.6)}35%{opacity:.8;transform:scale(1.1)}70%{opacity:.1}75%{opacity:.8}}
+@keyframes glowPulse{0%,100%{opacity:.6}50%{opacity:1}}
+@keyframes hamFloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-8px) rotate(2deg)}}
 
 .hero-scroll{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;z-index:2;opacity:0;animation:fadeIn 1s ease 1.4s forwards}
 .hero-scroll span{font-family:var(--f-d);font-weight:700;font-size:10px;letter-spacing:.2em;color:var(--ink-lt);text-transform:uppercase}
@@ -729,7 +733,7 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
       </div>
       <div class="g-card reveal">
         <div class="g-thumb">
-          <img src="./3dmodel002.jpg" alt="メタバースゲーム用3Dモデル" style="width:100%;height:100%;object-fit:cover">
+          <img src="./3dmodel002.jpeg" alt="メタバースゲーム用3Dモデル" style="width:100%;height:100%;object-fit:cover">
         </div>
         <div class="g-info">
           <div class="g-title">メタバースゲーム用モデル</div>
@@ -774,36 +778,35 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
         </div>
       </div>
 
-      <!-- コーポレートサイト -->
+      <!-- はむ電 Coming Soon -->
       <div class="g-card reveal">
-        <div class="g-thumb g-thumb-web">
-          <div class="web-ph web-ph-corp">
-            <div class="web-ph-bar">
-              <span class="web-ph-dot"></span>
-              <span class="web-ph-dot"></span>
-              <span class="web-ph-dot"></span>
-              <span class="web-ph-url">corporate-site.com</span>
-            </div>
-            <div class="web-ph-body">
-              <div class="web-ph-hero web-ph-hero-corp">
-                <div class="web-ph-ttl web-ph-ttl-corp">Corporate<br>Site</div>
-                <div class="web-ph-btn web-ph-btn-navy"></div>
-              </div>
-              <div class="web-ph-cards">
-                <div class="web-ph-card"></div>
-                <div class="web-ph-card"></div>
-                <div class="web-ph-card"></div>
-              </div>
-            </div>
+        <div class="g-thumb g-thumb-web" style="position:relative;overflow:hidden;background:#1a1a2e;display:flex;align-items:center;justify-content:center">
+          <!-- 電気チカチカ背景 -->
+          <div style="position:absolute;inset:0;background:#1a1a2e"></div>
+          <div class="ham-electric-bg" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;padding:8px;opacity:.5">
+            <span style="font-size:18px;animation:elec1 1.4s ease-in-out infinite">⚡</span>
+            <span style="font-size:12px;animation:elec2 1.1s ease-in-out .3s infinite">⚡</span>
+            <span style="font-size:16px;animation:elec1 1.7s ease-in-out .6s infinite">⚡</span>
+            <span style="font-size:10px;animation:elec2 1.3s ease-in-out .2s infinite">⚡</span>
+            <span style="font-size:20px;animation:elec1 1.5s ease-in-out .8s infinite">⚡</span>
+            <span style="font-size:14px;animation:elec2 1.2s ease-in-out .4s infinite">⚡</span>
+            <span style="font-size:11px;animation:elec1 1.6s ease-in-out .1s infinite">⚡</span>
+            <span style="font-size:17px;animation:elec2 1.4s ease-in-out .7s infinite">⚡</span>
           </div>
+          <!-- グロー効果 -->
+          <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center, rgba(255,220,50,.18) 0%, transparent 70%);animation:glowPulse 1.5s ease-in-out infinite"></div>
+          <!-- ハムスターイラスト -->
+          <img src="./ham01.png" alt="はむ電キャラクター" style="position:relative;z-index:2;width:60%;height:60%;object-fit:contain;animation:hamFloat 3s ease-in-out infinite;filter:drop-shadow(0 0 12px rgba(255,220,50,.8))">
+          <!-- Coming Soonテキスト -->
+          <div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);z-index:3;background:rgba(255,220,50,.15);border:1.5px solid rgba(255,220,50,.5);border-radius:999px;padding:3px 14px;font-family:'Nunito',sans-serif;font-weight:800;font-size:10px;color:#ffd632;letter-spacing:.12em;white-space:nowrap">Coming Soon</div>
         </div>
         <div class="g-info">
-          <div class="g-title">コーポレートサイト</div>
+          <div class="g-title">はむ電 <span class="g-self-badge">制作中</span></div>
           <div class="g-tags">
-            <span class="g-tag">Affinity</span>
-            <span class="g-tag">HTML</span>
-            <span class="g-tag">CSS</span>
-            <span class="g-tag">企業サイト</span>
+            <span class="g-tag">ゲーム</span>
+            <span class="g-tag">Android</span>
+            <span class="g-tag">iOS</span>
+            <span class="g-tag">クリッカー</span>
           </div>
         </div>
       </div>
