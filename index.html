@@ -473,6 +473,269 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
 }
 /* モデル読み込み後はフォールバックを隠す */
 .live2d-fallback.hidden { opacity: 0; pointer-events: none; }
+/* ═══ SIMULATOR ═══ */
+.sim-wrap {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 28px;
+  align-items: start;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* グループ */
+.sim-group {
+  margin-bottom: 20px;
+}
+.sim-group:last-child { margin-bottom: 0; }
+.sim-group-label {
+  font-family: var(--f-d);
+  font-weight: 800;
+  font-size: 12px;
+  color: var(--marine-600);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1.5px solid var(--marine-100);
+}
+
+/* チェックアイテム */
+.sim-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--rule);
+  background: var(--bg-soft);
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: background .18s, border-color .18s, transform .15s;
+  user-select: none;
+}
+.sim-item:last-child { margin-bottom: 0; }
+.sim-item:hover { background: var(--marine-50); border-color: var(--marine-200); }
+.sim-item:active { transform: scale(.99); }
+
+/* チェックボックス本体を非表示 */
+.sim-item input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0; height: 0;
+}
+
+/* カスタムチェックボックス */
+.sim-check-box {
+  width: 22px; height: 22px;
+  border-radius: 7px;
+  border: 2px solid var(--marine-200);
+  background: #fff;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .18s, border-color .18s;
+  position: relative;
+}
+.sim-check-box::after {
+  content: '';
+  width: 6px; height: 10px;
+  border-right: 2.5px solid #fff;
+  border-bottom: 2.5px solid #fff;
+  transform: rotate(45deg) translate(-1px, -1px);
+  opacity: 0;
+  transition: opacity .15s;
+}
+
+/* チェック済みスタイル */
+.sim-item:has(input:checked) {
+  background: var(--accent-lt);
+  border-color: var(--marine-400);
+}
+.sim-item:has(input:checked) .sim-check-box {
+  background: var(--marine-600);
+  border-color: var(--marine-600);
+}
+.sim-item:has(input:checked) .sim-check-box::after {
+  opacity: 1;
+}
+
+.sim-item-text {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.sim-item-name {
+  font-family: var(--f-d);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+}
+.sim-item-price {
+  font-family: var(--f-d);
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--marine-600);
+  white-space: nowrap;
+}
+
+/* 合計パネル */
+.sim-result {
+  position: sticky;
+  top: 80px;
+}
+.sim-result-inner {
+  background: var(--bg-white);
+  border: 2px solid var(--marine-200);
+  border-radius: var(--r-lg);
+  padding: 28px 24px;
+  text-align: center;
+  box-shadow: 0 8px 28px rgba(26,120,180,.1);
+}
+.sim-result-label {
+  font-family: var(--f-d);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--muted-lt);
+  margin-bottom: 10px;
+}
+.sim-total {
+  font-family: var(--f-d);
+  font-weight: 900;
+  font-size: clamp(22px, 3vw, 30px);
+  color: var(--marine-600);
+  letter-spacing: -.01em;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  transition: all .25s cubic-bezier(0.34,1.4,0.64,1);
+}
+.sim-total.bump {
+  transform: scale(1.08);
+  color: var(--accent);
+}
+.sim-note {
+  font-size: 11px;
+  color: var(--ink-md);
+  line-height: 1.7;
+  margin-bottom: 20px;
+  padding: 10px 12px;
+  background: var(--marine-50);
+  border-radius: var(--r-sm);
+}
+.sim-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  background: var(--coral);
+  color: #fff;
+  font-family: var(--f-d);
+  font-weight: 800;
+  font-size: 13px;
+  padding: 13px 16px;
+  border-radius: var(--r-pill);
+  box-shadow: 0 4px 16px rgba(255,107,138,.35);
+  transition: background .18s, transform .15s;
+}
+.sim-cta:hover { background: var(--coral-dk); transform: translateY(-1px); }
+
+/* レスポンシブ */
+@media (max-width: 680px) {
+  .sim-wrap { grid-template-columns: 1fr; }
+  .sim-result { position: static; }
+}
+/* ═══ TEMPLATE BLOCK ═══ */
+.template-block {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto 32px;
+  background: rgba(255,255,255,.08);
+  border: 1.5px solid rgba(255,255,255,.15);
+  border-radius: var(--r-lg);
+  padding: 24px;
+  text-align: left;
+}
+.template-title {
+  font-family: var(--f-d);
+  font-weight: 800;
+  font-size: 14px;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.template-desc {
+  font-size: 12px;
+  color: rgba(255,255,255,.55);
+  margin-bottom: 14px;
+  font-family: var(--f-d);
+}
+.template-text {
+  background: rgba(0,0,0,.25);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--r-md);
+  padding: 14px 16px;
+  font-family: var(--f-b);
+  font-size: 12px;
+  line-height: 1.85;
+  color: rgba(255,255,255,.8);
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin-bottom: 14px;
+  user-select: all;
+}
+.template-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+/* コピーボタン */
+.template-btn-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255,255,255,.12);
+  border: 1.5px solid rgba(255,255,255,.25);
+  color: #fff;
+  font-family: var(--f-d);
+  font-weight: 700;
+  font-size: 13px;
+  padding: 10px 18px;
+  border-radius: var(--r-pill);
+  cursor: pointer;
+  transition: background .18s, transform .15s;
+  flex: 1;
+  justify-content: center;
+}
+.template-btn-copy:hover { background: rgba(255,255,255,.2); transform: translateY(-1px); }
+.template-btn-copy.copied {
+  background: var(--green-bg);
+  border-color: var(--green);
+  color: var(--green);
+}
+/* XのDMへボタン */
+.template-btn-x {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--f-d);
+  font-weight: 800;
+  font-size: 13px;
+  padding: 10px 18px;
+  border-radius: var(--r-pill);
+  transition: transform .15s, box-shadow .18s;
+  flex: 1;
+  justify-content: center;
+  white-space: nowrap;
+}
+.template-btn-x:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,.2); }
 </style>
 </head>
 <body>
@@ -733,7 +996,7 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
       </div>
       <div class="g-card reveal">
         <div class="g-thumb">
-          <img src="./3dmodel002.jpg" alt="メタバースゲーム用3Dモデル" style="width:100%;height:100%;object-fit:cover">
+          <img src="./3dmodel002.jpeg" alt="メタバースゲーム用3Dモデル" style="width:100%;height:100%;object-fit:cover">
         </div>
         <div class="g-info">
           <div class="g-title">メタバースゲーム用モデル</div>
@@ -877,6 +1140,119 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
 </section>
 
 <!-- ████ PROFILE ████ -->
+<!-- ════════════════════════════════════════
+     見積もりシミュレーター
+     料金の目安をチェックで確認できるセクション
+════════════════════════════════════════ -->
+<section class="section" id="simulator" aria-labelledby="sim-heading"
+  style="background:var(--bg-white);border-top:1px solid var(--marine-100)">
+  <div class="inner">
+    <div class="sec-head reveal">
+      <div class="sec-tag">✦ Simulator</div>
+      <h2 class="sec-title" id="sim-heading">料金シミュレーター</h2>
+      <p class="sec-desc">気になるものにチェックを入れると、目安金額がわかります🎨</p>
+    </div>
+
+    <div class="sim-wrap reveal">
+
+      <!-- ── チェックリスト ── -->
+      <div class="sim-list">
+
+        <!-- 基本 -->
+        <div class="sim-group">
+          <div class="sim-group-label">🖼 基本メニュー</div>
+
+          <label class="sim-item">
+            <input type="checkbox" class="sim-check" data-price="3000" data-exclusive="illust">
+            <span class="sim-check-box" aria-hidden="true"></span>
+            <span class="sim-item-text">
+              <span class="sim-item-name">キャライラスト（3頭身）</span>
+              <span class="sim-item-price">¥3,000</span>
+            </span>
+          </label>
+
+          <label class="sim-item">
+            <input type="checkbox" class="sim-check" data-price="5000">
+            <span class="sim-check-box" aria-hidden="true"></span>
+            <span class="sim-item-text">
+              <span class="sim-item-name">3D小物</span>
+              <span class="sim-item-price">¥5,000</span>
+            </span>
+          </label>
+        </div>
+
+        <!-- 等身調整 -->
+        <div class="sim-group">
+          <div class="sim-group-label">📐 等身調整（オプション）</div>
+
+          <label class="sim-item">
+            <input type="checkbox" class="sim-check" data-price="2000" data-group="toushin">
+            <span class="sim-check-box" aria-hidden="true"></span>
+            <span class="sim-item-text">
+              <span class="sim-item-name">等身アップ（4〜6頭身）</span>
+              <span class="sim-item-price">＋¥2,000</span>
+            </span>
+          </label>
+
+          <label class="sim-item">
+            <input type="checkbox" class="sim-check" data-price="4000" data-group="toushin">
+            <span class="sim-check-box" aria-hidden="true"></span>
+            <span class="sim-item-text">
+              <span class="sim-item-name">等身アップ（7頭身〜）</span>
+              <span class="sim-item-price">＋¥4,000</span>
+            </span>
+          </label>
+        </div>
+
+        <!-- オプション -->
+        <div class="sim-group">
+          <div class="sim-group-label">✨ オプション</div>
+
+          <label class="sim-item">
+            <input type="checkbox" class="sim-check" data-price="15000">
+            <span class="sim-check-box" aria-hidden="true"></span>
+            <span class="sim-item-text">
+              <span class="sim-item-name">Live2D</span>
+              <span class="sim-item-price">＋¥15,000</span>
+            </span>
+          </label>
+
+          <label class="sim-item">
+            <input type="checkbox" class="sim-check" data-price="8000">
+            <span class="sim-check-box" aria-hidden="true"></span>
+            <span class="sim-item-text">
+              <span class="sim-item-name">アニメーション</span>
+              <span class="sim-item-price">＋¥8,000</span>
+            </span>
+          </label>
+
+          <label class="sim-item">
+            <input type="checkbox" class="sim-check" data-price="3000">
+            <span class="sim-check-box" aria-hidden="true"></span>
+            <span class="sim-item-text">
+              <span class="sim-item-name">表情差分</span>
+              <span class="sim-item-price">＋¥3,000</span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <!-- ── 合計表示 ── -->
+      <div class="sim-result" aria-live="polite" aria-label="見積もり合計">
+        <div class="sim-result-inner">
+          <div class="sim-result-label">お見積もり目安</div>
+          <div class="sim-total" id="simTotal">目安：3,000円〜</div>
+          <div class="sim-note">内容により変動します。お気軽にご相談ください🎨</div>
+          <a href="https://twitter.com/vsoekakiland" target="_blank" rel="noopener"
+             class="sim-cta">
+            ✉ ご依頼・ご相談はこちら
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /.sim-wrap -->
+  </div>
+</section>
 <section class="section profile-section" id="profile">
   <div class="inner">
     <div class="sec-head reveal">
@@ -925,6 +1301,36 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
       受注はX（Twitter）のDMにて受け付けています。<br>
       作品・活動情報は各リンクからご覧ください🎨
     </p>
+
+    <!-- ご依頼テンプレ -->
+    <div class="template-block reveal">
+      <div class="template-title">📋 ご依頼テンプレ</div>
+      <div class="template-desc">分かる範囲でOKです！お気軽にご相談ください🎨</div>
+      <pre class="template-text" id="templateText">【ご依頼テンプレ】
+・ご依頼内容（イラスト / Live2D / 3Dなど）：
+・作成数：
+・ご希望のテイスト（かわいい / シンプル / 参考画像など）：
+・サイズ / 用途（SNS / ゲーム / 配信など）：
+・希望納期：
+・提案期限（いつまでに見積りが欲しいか）：
+・ご予算（目安でOK）：
+・その他ご要望：</pre>
+      <div class="template-actions">
+        <!-- コピーボタン -->
+        <button class="template-btn-copy" id="copyBtn" onclick="copyTemplate()" aria-label="テンプレをクリップボードにコピー">
+          <span id="copyIcon">📋</span>
+          <span id="copyText">テンプレをコピー</span>
+        </button>
+        <!-- XのDMへ -->
+        <a class="template-btn-x" id="dmBtn" href="#" target="_blank" rel="noopener"
+           aria-label="テンプレをXのDMで送る">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63z"/>
+          </svg>
+          この内容でXのDMへ
+        </a>
+      </div>
+    </div>
 
     <!-- メインCTA: X DM -->
     <a href="https://twitter.com/vsoekakiland" target="_blank" rel="noopener"
@@ -1308,6 +1714,100 @@ document.querySelectorAll('.g-tab').forEach(tab => {
     if (tab.dataset.tab === 'anim') initGalleryLive2d();
   });
 });
+/* ── 見積もりシミュレーター ── */
+(function() {
+  const checks  = document.querySelectorAll('.sim-check');
+  const totalEl = document.getElementById('simTotal');
+  if (!checks.length || !totalEl) return;
+
+  /**
+   * 合計を計算して表示する
+   * - 等身グループは1つだけ選択可（ラジオ的挙動）
+   * - 0円のときは最小料金（3000円〜）を表示
+   */
+  function calcTotal() {
+    let total = 0;
+    checks.forEach(c => {
+      if (c.checked) total += parseInt(c.dataset.price, 10);
+    });
+
+    const formatted = total.toLocaleString('ja-JP');
+    totalEl.textContent = total === 0
+      ? '目安：3,000円〜'
+      : `目安：${formatted}円〜`;
+
+    // ぽんっとはずむアニメーション
+    totalEl.classList.remove('bump');
+    void totalEl.offsetWidth; // reflow
+    totalEl.classList.add('bump');
+    setTimeout(() => totalEl.classList.remove('bump'), 320);
+  }
+
+  checks.forEach(c => {
+    c.addEventListener('change', function() {
+      // 等身グループは排他制御（どちらか一方だけ）
+      if (this.dataset.group === 'toushin' && this.checked) {
+        checks.forEach(other => {
+          if (other !== this && other.dataset.group === 'toushin') {
+            other.checked = false;
+          }
+        });
+      }
+      calcTotal();
+    });
+  });
+
+  // 初期表示
+  calcTotal();
+})();
+/* ── ご依頼テンプレ ── */
+// XのDMリンクをテンプレ内容付きで生成
+(function() {
+  const tmpl  = document.getElementById('templateText');
+  const dmBtn = document.getElementById('dmBtn');
+  if (!tmpl || !dmBtn) return;
+
+  const xUser = 'vsoekakiland';
+  const text  = encodeURIComponent(tmpl.textContent.trim());
+  dmBtn.href  = `https://twitter.com/messages/compose?recipient_id=${xUser}&text=${text}`;
+})();
+
+// クリップボードコピー
+function copyTemplate() {
+  const tmpl    = document.getElementById('templateText');
+  const btn     = document.getElementById('copyBtn');
+  const iconEl  = document.getElementById('copyIcon');
+  const textEl  = document.getElementById('copyText');
+  if (!tmpl || !btn) return;
+
+  navigator.clipboard.writeText(tmpl.textContent.trim())
+    .then(() => {
+      // コピー成功フィードバック
+      btn.classList.add('copied');
+      iconEl.textContent = '✅';
+      textEl.textContent = 'コピーしました！';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        iconEl.textContent = '📋';
+        textEl.textContent = 'テンプレをコピー';
+      }, 2200);
+    })
+    .catch(() => {
+      // フォールバック（旧ブラウザ対応）
+      const range = document.createRange();
+      range.selectNode(tmpl);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      iconEl.textContent = '✅';
+      textEl.textContent = 'コピーしました！';
+      setTimeout(() => {
+        iconEl.textContent = '📋';
+        textEl.textContent = 'テンプレをコピー';
+      }, 2200);
+    });
+}
 </script>
 </body>
 </html>
