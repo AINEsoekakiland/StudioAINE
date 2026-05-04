@@ -736,8 +736,41 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
   white-space: nowrap;
 }
 .template-btn-x:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,.2); }
+/* ═══ 固定CTAボタン ═══ */
+.fixed-cta {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 400;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .4s ease, transform .4s ease;
+  pointer-events: none;
+}
+.fixed-cta.show {
+  opacity: 1;
+  transform: none;
+  pointer-events: all;
+}
+.fixed-cta a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--coral);
+  color: #fff;
+  font-family: var(--f-d);
+  font-weight: 800;
+  font-size: 14px;
+  padding: 14px 22px;
+  border-radius: var(--r-pill);
+  box-shadow: 0 6px 24px rgba(255,107,138,.5);
+  transition: background .18s, transform .15s;
+  white-space: nowrap;
+}
+.fixed-cta a:hover { background: var(--coral-dk); transform: translateY(-2px); }
+/* スマホ: float-ctaと重ならないよう非表示 */
+@media(max-width:900px) { .fixed-cta { display: none; } }
 </style>
-</head>
 <body>
 
 <nav class="mobile-nav" id="mobileNav" aria-label="モバイルナビゲーション">
@@ -782,14 +815,21 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
       描くクリエイター
     </h1>
 
-    <!-- 肩書き1行 — 何屋か一発で分かる -->
-    <div style="display:inline-flex;align-items:center;gap:8px;background:var(--marine-100);border:1.5px solid var(--marine-200);border-radius:var(--r-pill);padding:8px 18px;margin-bottom:20px;opacity:0;animation:slideUp .8s ease .45s forwards">
-      <span style="font-family:var(--f-d);font-weight:800;font-size:13px;color:var(--marine-600)">Live2Dモデリング</span>
+    <!-- 肩書き1行 — 何屋か1秒で分かる -->
+    <div style="display:inline-flex;align-items:center;gap:8px;background:var(--marine-100);border:1.5px solid var(--marine-200);border-radius:var(--r-pill);padding:8px 18px;margin-bottom:16px;opacity:0;animation:slideUp .8s ease .45s forwards">
+      <span style="font-family:var(--f-d);font-weight:800;font-size:13px;color:var(--marine-600)">ゆるかわキャラ</span>
       <span style="color:var(--marine-400);font-size:12px">/</span>
-      <span style="font-family:var(--f-d);font-weight:800;font-size:13px;color:var(--marine-600)">イラスト</span>
+      <span style="font-family:var(--f-d);font-weight:800;font-size:13px;color:var(--marine-600)">3D小物</span>
       <span style="color:var(--marine-400);font-size:12px">/</span>
-      <span style="font-family:var(--f-d);font-weight:800;font-size:13px;color:var(--marine-600)">3Dアイテム制作</span>
+      <span style="font-family:var(--f-d);font-weight:800;font-size:13px;color:var(--marine-600)">Live2D制作</span>
     </div>
+
+    <!-- ターゲット明記 — 誰向けか1行で -->
+    <div style="display:inline-flex;align-items:center;gap:7px;background:var(--coral-lt);border:1.5px solid var(--coral);border-radius:var(--r-pill);padding:7px 16px;margin-bottom:20px;opacity:0;animation:slideUp .8s ease .52s forwards">
+      <span style="font-size:13px">🎮</span>
+      <span style="font-family:var(--f-d);font-weight:800;font-size:13px;color:var(--coral-dk)">ゲーム・配信・SNS用の制作承ります</span>
+    </div>
+
     <p class="hero-sub">
       イラスト・教育アニメ・3Dモデルまで。<br>
       子どもから大人まで笑顔になる<br>
@@ -866,6 +906,50 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
 </section>
 
 <!-- ████ GALLERY ████ -->
+<!-- ════════════════════════════════════
+     制作の流れ
+     初めての方も安心して依頼できる
+════════════════════════════════════ -->
+<section style="background:var(--bg-soft);border-top:1px solid var(--marine-100);padding:72px clamp(20px,5vw,80px)">
+  <div style="max-width:var(--max);margin:0 auto">
+    <div class="sec-head reveal" style="margin-bottom:36px">
+      <div class="sec-tag">✦ How to Order</div>
+      <h2 class="sec-title">制作の流れ</h2>
+      <p class="sec-desc">はじめての方もお気軽にどうぞ🎨</p>
+    </div>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px;border:1.5px solid var(--marine-100);border-radius:var(--r-lg);overflow:hidden;position:relative">
+
+      <div style="background:var(--bg-white);padding:28px 24px;text-align:center;position:relative">
+        <div style="font-family:var(--f-d);font-size:36px;font-weight:900;color:var(--marine-100);line-height:1;margin-bottom:10px">01</div>
+        <div style="font-size:28px;margin-bottom:10px">💬</div>
+        <div style="font-family:var(--f-d);font-weight:800;font-size:15px;color:var(--ink);margin-bottom:6px">ご相談</div>
+        <div style="font-size:12px;color:var(--ink-md);line-height:1.7">XのDMにて内容・ご予算などお気軽にご相談ください</div>
+      </div>
+
+      <div style="background:var(--bg-white);padding:28px 24px;text-align:center;border-left:1px solid var(--marine-100)">
+        <div style="font-family:var(--f-d);font-size:36px;font-weight:900;color:var(--marine-100);line-height:1;margin-bottom:10px">02</div>
+        <div style="font-size:28px;margin-bottom:10px">📋</div>
+        <div style="font-family:var(--f-d);font-weight:800;font-size:15px;color:var(--ink);margin-bottom:6px">お見積もり</div>
+        <div style="font-size:12px;color:var(--ink-md);line-height:1.7">内容を確認後、料金と納期の目安をご提示します</div>
+      </div>
+
+      <div style="background:var(--bg-white);padding:28px 24px;text-align:center;border-left:1px solid var(--marine-100)">
+        <div style="font-family:var(--f-d);font-size:36px;font-weight:900;color:var(--marine-100);line-height:1;margin-bottom:10px">03</div>
+        <div style="font-size:28px;margin-bottom:10px">🎨</div>
+        <div style="font-family:var(--f-d);font-weight:800;font-size:15px;color:var(--ink);margin-bottom:6px">制作</div>
+        <div style="font-size:12px;color:var(--ink-md);line-height:1.7">ご入金確認後、制作開始。途中確認しながら進めます</div>
+      </div>
+
+      <div style="background:var(--bg-white);padding:28px 24px;text-align:center;border-left:1px solid var(--marine-100)">
+        <div style="font-family:var(--f-d);font-size:36px;font-weight:900;color:var(--marine-100);line-height:1;margin-bottom:10px">04</div>
+        <div style="font-size:28px;margin-bottom:10px">📦</div>
+        <div style="font-family:var(--f-d);font-weight:800;font-size:15px;color:var(--ink);margin-bottom:6px">納品</div>
+        <div style="font-size:12px;color:var(--ink-md);line-height:1.7">完成データをお渡しします。修正対応もご相談ください</div>
+      </div>
+
+    </div>
+  </div>
+</section>
 <section class="section gallery-section" id="gallery" aria-labelledby="gallery-heading">
   <div class="inner">
     <div class="sec-head reveal">
@@ -1419,6 +1503,11 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
   <a href="#contact">✉ 受注のご依頼はこちら</a>
 </div>
 
+<!-- 固定CTAボタン（PC右下） -->
+<div class="fixed-cta" id="fixedCta">
+  <a href="#contact">✉ ご依頼はこちら</a>
+</div>
+
 <script>
 /* ── ハンバーガー ── */
 const hamburger = document.getElementById('hamburger');
@@ -1807,6 +1896,15 @@ function copyTemplate() {
         textEl.textContent = 'テンプレをコピー';
       }, 2200);
     });
+}
+/* ── 固定CTAボタン（PC右下）── */
+const fixedCta = document.getElementById('fixedCta');
+if (fixedCta) {
+  // Heroセクションを過ぎたら表示
+  const heroEl = document.getElementById('top');
+  new IntersectionObserver(([e]) => {
+    fixedCta.classList.toggle('show', !e.isIntersecting);
+  }, { threshold: 0.1 }).observe(heroEl || document.body);
 }
 </script>
 </body>
