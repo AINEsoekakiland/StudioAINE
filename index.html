@@ -469,8 +469,57 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
 }
 /* モデル読み込み後はフォールバックを隠す */
 .live2d-fallback.hidden { opacity: 0; pointer-events: none; }
+/* ═══ SIMULATOR ═══ */
+.sim-wrap{display:grid;grid-template-columns:1fr 300px;gap:28px;align-items:start;max-width:900px;margin:0 auto}
+.sim-group{margin-bottom:20px}
+.sim-group:last-child{margin-bottom:0}
+.sim-group-label{font-family:var(--f-d);font-weight:800;font-size:12px;color:var(--marine-600);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;padding-bottom:8px;border-bottom:1.5px solid var(--marine-100)}
+.sim-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:var(--r-md);border:1.5px solid var(--rule);background:var(--bg-soft);cursor:pointer;margin-bottom:8px;transition:background .18s,border-color .18s,transform .15s;user-select:none}
+.sim-item:hover{background:var(--marine-50);border-color:var(--marine-200)}
+.sim-item input[type="checkbox"]{position:absolute;opacity:0;width:0;height:0}
+.sim-check-box{width:22px;height:22px;border-radius:7px;border:2px solid var(--marine-200);background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .18s,border-color .18s;position:relative}
+.sim-check-box::after{content:'';width:6px;height:10px;border-right:2.5px solid #fff;border-bottom:2.5px solid #fff;transform:rotate(45deg) translate(-1px,-1px);opacity:0;transition:opacity .15s}
+.sim-item:has(input:checked){background:var(--accent-lt);border-color:var(--marine-400)}
+.sim-item:has(input:checked) .sim-check-box{background:var(--marine-600);border-color:var(--marine-600)}
+.sim-item:has(input:checked) .sim-check-box::after{opacity:1}
+.sim-item-text{display:flex;align-items:center;justify-content:space-between;flex:1;gap:8px;flex-wrap:wrap}
+.sim-item-name{font-family:var(--f-d);font-weight:700;font-size:13px;color:var(--ink)}
+.sim-item-price{font-family:var(--f-d);font-weight:800;font-size:13px;color:var(--marine-600);white-space:nowrap}
+.sim-result{position:sticky;top:80px}
+.sim-result-inner{background:var(--bg-white);border:2px solid var(--marine-200);border-radius:var(--r-lg);padding:28px 24px;text-align:center;box-shadow:0 8px 28px rgba(26,120,180,.1)}
+.sim-result-label{font-family:var(--f-d);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-lt);margin-bottom:10px}
+.sim-total{font-family:var(--f-d);font-weight:900;font-size:clamp(22px,3vw,30px);color:var(--marine-600);letter-spacing:-.01em;line-height:1.2;margin-bottom:12px;transition:all .25s cubic-bezier(0.34,1.4,0.64,1)}
+.sim-total.bump{transform:scale(1.08)}
+.sim-note{font-size:11px;color:var(--ink-md);line-height:1.7;margin-bottom:20px;padding:10px 12px;background:var(--marine-50);border-radius:var(--r-sm)}
+.sim-cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--coral);color:#fff;font-family:var(--f-d);font-weight:800;font-size:13px;padding:13px 16px;border-radius:var(--r-pill);box-shadow:0 4px 16px rgba(255,107,138,.35);transition:background .18s,transform .15s}
+.sim-cta:hover{background:var(--coral-dk);transform:translateY(-1px)}
+@media(max-width:680px){.sim-wrap{grid-template-columns:1fr}.sim-result{position:static}}
+
+/* ═══ TEMPLATE BLOCK ═══ */
+.template-block{width:100%;max-width:480px;margin:0 auto 32px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.15);border-radius:var(--r-lg);padding:24px;text-align:left}
+.template-title{font-family:var(--f-d);font-weight:800;font-size:14px;color:#fff;margin-bottom:4px}
+.template-desc{font-size:12px;color:rgba(255,255,255,.55);margin-bottom:14px;font-family:var(--f-d)}
+.template-text{background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-md);padding:14px 16px;font-family:var(--f-b);font-size:12px;line-height:1.85;color:rgba(255,255,255,.8);white-space:pre-wrap;word-break:break-all;margin-bottom:14px;user-select:all}
+.template-actions{display:flex;gap:10px;flex-wrap:wrap}
+.template-btn-copy{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);color:#fff;font-family:var(--f-d);font-weight:700;font-size:13px;padding:10px 18px;border-radius:var(--r-pill);cursor:pointer;transition:background .18s,transform .15s;flex:1;justify-content:center}
+.template-btn-copy:hover{background:rgba(255,255,255,.2);transform:translateY(-1px)}
+.template-btn-copy.copied{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.template-btn-x{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--ink);font-family:var(--f-d);font-weight:800;font-size:13px;padding:10px 18px;border-radius:var(--r-pill);transition:transform .15s,box-shadow .18s;flex:1;justify-content:center;white-space:nowrap}
+.template-btn-x:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.2)}
+
+/* ═══ はむ電エレクトリックアニメ ═══ */
+@keyframes elec1{0%,100%{opacity:1;transform:scale(1)}45%{opacity:.1;transform:scale(.7)}50%{opacity:1;transform:scale(1.2)}55%{opacity:.1}60%{opacity:1}}
+@keyframes elec2{0%,100%{opacity:.8;transform:scale(1)}30%{opacity:.05;transform:scale(.6)}35%{opacity:.8;transform:scale(1.1)}70%{opacity:.1}75%{opacity:.8}}
+@keyframes glowPulse{0%,100%{opacity:.6}50%{opacity:1}}
+@keyframes hamFloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-8px) rotate(2deg)}}
+
+/* ═══ 固定CTAボタン ═══ */
+.fixed-cta{position:fixed;bottom:24px;right:24px;z-index:400;opacity:0;transform:translateY(16px);transition:opacity .4s ease,transform .4s ease;pointer-events:none}
+.fixed-cta.show{opacity:1;transform:none;pointer-events:all}
+.fixed-cta a{display:flex;align-items:center;gap:8px;background:var(--coral);color:#fff;font-family:var(--f-d);font-weight:800;font-size:14px;padding:14px 22px;border-radius:var(--r-pill);box-shadow:0 6px 24px rgba(255,107,138,.5);transition:background .18s,transform .15s;white-space:nowrap}
+.fixed-cta a:hover{background:var(--coral-dk);transform:translateY(-2px)}
+@media(max-width:900px){.fixed-cta{display:none}}
 </style>
-</head>
 <body>
 
 <nav class="mobile-nav" id="mobileNav" aria-label="モバイルナビゲーション">
@@ -526,7 +575,7 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
     <p class="hero-sub">
       イラスト・教育アニメ・3Dモデルまで。<br>
       子どもから大人まで笑顔になる<br>
-      「伝えたい」を形にします🎨
+      「伝えたい」を形にします<img src="./pallet.png" alt="制作" style="width:20px;height:20px;object-fit:contain;vertical-align:middle">
     </p>
     <div class="hero-chips" aria-label="対応ジャンル">
       <span class="chip primary">✦ イラスト・アニメ制作</span>
@@ -774,36 +823,29 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
         </div>
       </div>
 
-      <!-- コーポレートサイト -->
+      <!-- はむ電 Coming Soon -->
       <div class="g-card reveal">
-        <div class="g-thumb g-thumb-web">
-          <div class="web-ph web-ph-corp">
-            <div class="web-ph-bar">
-              <span class="web-ph-dot"></span>
-              <span class="web-ph-dot"></span>
-              <span class="web-ph-dot"></span>
-              <span class="web-ph-url">corporate-site.com</span>
-            </div>
-            <div class="web-ph-body">
-              <div class="web-ph-hero web-ph-hero-corp">
-                <div class="web-ph-ttl web-ph-ttl-corp">Corporate<br>Site</div>
-                <div class="web-ph-btn web-ph-btn-navy"></div>
-              </div>
-              <div class="web-ph-cards">
-                <div class="web-ph-card"></div>
-                <div class="web-ph-card"></div>
-                <div class="web-ph-card"></div>
-              </div>
-            </div>
+        <div class="g-thumb g-thumb-web" style="position:relative;overflow:hidden;background:#1a1a2e;display:flex;align-items:center;justify-content:center">
+          <div style="position:absolute;inset:0;background:#1a1a2e"></div>
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;padding:8px;opacity:.5">
+            <span style="font-size:18px;animation:elec1 1.4s ease-in-out infinite">⚡</span>
+            <span style="font-size:12px;animation:elec2 1.1s ease-in-out .3s infinite">⚡</span>
+            <span style="font-size:16px;animation:elec1 1.7s ease-in-out .6s infinite">⚡</span>
+            <span style="font-size:10px;animation:elec2 1.3s ease-in-out .2s infinite">⚡</span>
+            <span style="font-size:20px;animation:elec1 1.5s ease-in-out .8s infinite">⚡</span>
+            <span style="font-size:14px;animation:elec2 1.2s ease-in-out .4s infinite">⚡</span>
           </div>
+          <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(255,220,50,.18) 0%,transparent 70%);animation:glowPulse 1.5s ease-in-out infinite"></div>
+          <img src="./ham01.png" alt="はむ電キャラクター" style="position:relative;z-index:2;width:60%;height:60%;object-fit:contain;animation:hamFloat 3s ease-in-out infinite;filter:drop-shadow(0 0 12px rgba(255,220,50,.8))">
+          <div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);z-index:3;background:rgba(255,220,50,.15);border:1.5px solid rgba(255,220,50,.5);border-radius:999px;padding:3px 14px;font-family:'Nunito',sans-serif;font-weight:800;font-size:10px;color:#ffd632;letter-spacing:.12em;white-space:nowrap">Coming Soon</div>
         </div>
         <div class="g-info">
-          <div class="g-title">コーポレートサイト</div>
+          <div class="g-title">はむ電 <span class="g-self-badge">制作中</span></div>
           <div class="g-tags">
-            <span class="g-tag">Affinity</span>
-            <span class="g-tag">HTML</span>
-            <span class="g-tag">CSS</span>
-            <span class="g-tag">企業サイト</span>
+            <span class="g-tag">ゲーム</span>
+            <span class="g-tag">Android</span>
+            <span class="g-tag">iOS</span>
+            <span class="g-tag">クリッカー</span>
           </div>
         </div>
       </div>
@@ -873,6 +915,76 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
   </div>
 </section>
 
+<!-- ████ SIMULATOR ████ -->
+<section class="section" id="simulator" aria-labelledby="sim-heading"
+  style="background:var(--bg-white);border-top:1px solid var(--marine-100)">
+  <div class="inner">
+    <div class="sec-head reveal">
+      <div class="sec-tag">✦ Simulator</div>
+      <h2 class="sec-title" id="sim-heading">料金シミュレーター</h2>
+      <p class="sec-desc">気になるものにチェックを入れると、目安金額がわかります</p>
+    </div>
+    <div class="sim-wrap reveal">
+      <div class="sim-list">
+        <div class="sim-group">
+          <div class="sim-group-label"><img src="./starfish.png" alt="" style="width:14px;height:14px;vertical-align:middle;margin-right:5px"> 基本メニュー</div>
+          <label class="sim-item">
+            <input type="checkbox" class="sim-check" data-price="3000">
+            <span class="sim-check-box" aria-hidden="true"></span>
+            <span class="sim-item-text"><span class="sim-item-name">キャライラスト（3頭身）</span><span class="sim-item-price">¥3,000</span></span>
+          </label>
+          <label class="sim-item">
+            <input type="checkbox" class="sim-check" data-price="5000">
+            <span class="sim-check-box" aria-hidden="true"></span>
+            <span class="sim-item-text"><span class="sim-item-name">3D小物</span><span class="sim-item-price">¥5,000</span></span>
+          </label>
+        </div>
+        <div class="sim-group">
+          <div class="sim-group-label">📐 等身調整（オプション）</div>
+          <label class="sim-item">
+            <input type="checkbox" class="sim-check" data-price="2000" data-group="toushin">
+            <span class="sim-check-box" aria-hidden="true"></span>
+            <span class="sim-item-text"><span class="sim-item-name">等身アップ（4〜6頭身）</span><span class="sim-item-price">＋¥2,000</span></span>
+          </label>
+          <label class="sim-item">
+            <input type="checkbox" class="sim-check" data-price="4000" data-group="toushin">
+            <span class="sim-check-box" aria-hidden="true"></span>
+            <span class="sim-item-text"><span class="sim-item-name">等身アップ（7頭身〜）</span><span class="sim-item-price">＋¥4,000</span></span>
+          </label>
+        </div>
+        <div class="sim-group">
+          <div class="sim-group-label"><img src="./bubble.png" alt="" style="width:14px;height:14px;vertical-align:middle;margin-right:5px"> オプション</div>
+          <label class="sim-item">
+            <input type="checkbox" class="sim-check" data-price="15000">
+            <span class="sim-check-box" aria-hidden="true"></span>
+            <span class="sim-item-text"><span class="sim-item-name">Live2D</span><span class="sim-item-price">＋¥15,000</span></span>
+          </label>
+          <label class="sim-item">
+            <input type="checkbox" class="sim-check" data-price="8000">
+            <span class="sim-check-box" aria-hidden="true"></span>
+            <span class="sim-item-text"><span class="sim-item-name">アニメーション</span><span class="sim-item-price">＋¥8,000</span></span>
+          </label>
+          <label class="sim-item">
+            <input type="checkbox" class="sim-check" data-price="3000">
+            <span class="sim-check-box" aria-hidden="true"></span>
+            <span class="sim-item-text"><span class="sim-item-name">表情差分</span><span class="sim-item-price">＋¥3,000</span></span>
+          </label>
+        </div>
+      </div>
+      <div class="sim-result" aria-live="polite">
+        <div class="sim-result-inner">
+          <div class="sim-result-label">お見積もり目安</div>
+          <div class="sim-total" id="simTotal">目安：3,000円〜</div>
+          <div class="sim-note">内容により変動します。お気軽にご相談ください</div>
+          <a href="https://twitter.com/vsoekakiland" target="_blank" rel="noopener" class="sim-cta">
+            ✉ ご依頼・ご相談はこちら
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ████ PROFILE ████ -->
 <section class="section profile-section" id="profile">
   <div class="inner">
@@ -920,8 +1032,35 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
     </h2>
     <p class="contact-sub">
       受注はX（Twitter）のDMにて受け付けています。<br>
-      作品・活動情報は各リンクからご覧ください🎨
+      作品・活動情報は各リンクからご覧ください<img src="./pallet.png" alt="制作" style="width:20px;height:20px;object-fit:contain;vertical-align:middle">
     </p>
+
+    <!-- ご依頼テンプレ -->
+    <div class="template-block reveal">
+      <div class="template-title">📋 ご依頼テンプレ</div>
+      <div class="template-desc">分かる範囲でOKです！お気軽にご相談ください</div>
+      <pre class="template-text" id="templateText">【ご依頼テンプレ】
+・ご依頼内容（イラスト / Live2D / 3Dなど）：
+・作成数：
+・ご希望のテイスト（かわいい / シンプル / 参考画像など）：
+・サイズ / 用途（SNS / ゲーム / 配信など）：
+・希望納期：
+・提案期限（いつまでに見積りが欲しいか）：
+・ご予算（目安でOK）：
+・その他ご要望：</pre>
+      <div class="template-actions">
+        <button class="template-btn-copy" id="copyBtn" onclick="copyTemplate()">
+          <span id="copyIcon">📋</span>
+          <span id="copyText">テンプレをコピー</span>
+        </button>
+        <a class="template-btn-x" id="dmBtn" href="https://twitter.com/messages/compose?recipient_id=vsoekakiland" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63z"/>
+          </svg>
+          この内容でXのDMへ
+        </a>
+      </div>
+    </div>
 
     <!-- メインCTA: X DM -->
     <a href="https://twitter.com/vsoekakiland" target="_blank" rel="noopener"
@@ -1305,6 +1444,179 @@ document.querySelectorAll('.g-tab').forEach(tab => {
     if (tab.dataset.tab === 'anim') initGalleryLive2d();
   });
 });
+</script>
+<!-- 固定CTAボタン（PC右下） -->
+<div class="fixed-cta" id="fixedCta">
+  <a href="#contact">✉ ご依頼はこちら</a>
+</div>
+
+<script>
+/* ── ハンバーガー ── */
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobileNav');
+hamburger.addEventListener('click', () => {
+  const open = mobileNav.classList.toggle('open');
+  hamburger.classList.toggle('open', open);
+  hamburger.setAttribute('aria-expanded', String(open));
+  document.body.style.overflow = open ? 'hidden' : '';
+});
+function closeMobileNav() {
+  mobileNav.classList.remove('open');
+  hamburger.classList.remove('open');
+  hamburger.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && mobileNav.classList.contains('open')) closeMobileNav();
+});
+
+/* ── ギャラリータブ ── */
+const tabs  = document.querySelectorAll('.g-tab');
+const grids = document.querySelectorAll('.gallery-grid');
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+    grids.forEach(g => g.classList.add('hidden'));
+    tab.classList.add('active');
+    tab.setAttribute('aria-selected', 'true');
+    const target = document.getElementById('grid-' + tab.dataset.tab);
+    if (!target) return;
+    target.classList.remove('hidden');
+    Array.from(target.querySelectorAll('.g-card')).forEach((c, i) => {
+      c.style.opacity = '0';
+      c.style.transform = 'translateY(14px)';
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          c.style.transition = 'opacity .38s ease, transform .38s ease';
+          c.style.opacity = '1';
+          c.style.transform = 'none';
+        }, i * 65);
+      });
+    });
+  });
+});
+
+/* ── スクロールリビール ── */
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const idx = Array.from(e.target.parentElement?.children ?? []).indexOf(e.target);
+    setTimeout(() => e.target.classList.add('vis'), Math.min(idx * 75, 280));
+    revealObs.unobserve(e.target);
+  });
+}, { threshold: 0.07 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+/* ── スムーススクロール ── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (!t) return;
+    e.preventDefault();
+    t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    closeMobileNav();
+  });
+});
+
+/* ── アクティブナビ ── */
+const navLinks = document.querySelectorAll('header nav a');
+document.querySelectorAll('section[id]').forEach(s => {
+  new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting)
+        navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+    });
+  }, { threshold: 0.4 }).observe(s);
+});
+
+/* ── フローティングCTA ── */
+const floatCta = document.getElementById('floatCta');
+const pricing  = document.getElementById('pricing');
+if (floatCta && pricing) {
+  new IntersectionObserver(([e]) => {
+    floatCta.style.opacity       = e.isIntersecting ? '0' : '1';
+    floatCta.style.pointerEvents = e.isIntersecting ? 'none' : 'all';
+  }, { threshold: 0.1 }).observe(pricing);
+}
+
+/* ── 固定CTAボタン ── */
+const fixedCta = document.getElementById('fixedCta');
+if (fixedCta) {
+  const heroEl = document.getElementById('top');
+  new IntersectionObserver(([e]) => {
+    fixedCta.classList.toggle('show', !e.isIntersecting);
+  }, { threshold: 0.1 }).observe(heroEl || document.body);
+}
+
+/* ── 見積もりシミュレーター ── */
+(function() {
+  const checks  = document.querySelectorAll('.sim-check');
+  const totalEl = document.getElementById('simTotal');
+  if (!checks.length || !totalEl) return;
+  function calcTotal() {
+    let total = 0;
+    checks.forEach(c => { if (c.checked) total += parseInt(c.dataset.price, 10); });
+    const formatted = total.toLocaleString('ja-JP');
+    totalEl.textContent = total === 0 ? '目安：3,000円〜' : `目安：${formatted}円〜`;
+    totalEl.classList.remove('bump');
+    void totalEl.offsetWidth;
+    totalEl.classList.add('bump');
+    setTimeout(() => totalEl.classList.remove('bump'), 320);
+  }
+  checks.forEach(c => {
+    c.addEventListener('change', function() {
+      if (this.dataset.group === 'toushin' && this.checked) {
+        checks.forEach(other => {
+          if (other !== this && other.dataset.group === 'toushin') other.checked = false;
+        });
+      }
+      calcTotal();
+    });
+  });
+  calcTotal();
+})();
+
+/* ── ご依頼テンプレ ── */
+(function() {
+  const tmpl  = document.getElementById('templateText');
+  const dmBtn = document.getElementById('dmBtn');
+  if (!tmpl || !dmBtn) return;
+  const text = encodeURIComponent(tmpl.textContent.trim());
+  dmBtn.href = `https://twitter.com/messages/compose?recipient_id=vsoekakiland&text=${text}`;
+})();
+
+function copyTemplate() {
+  const tmpl   = document.getElementById('templateText');
+  const btn    = document.getElementById('copyBtn');
+  const iconEl = document.getElementById('copyIcon');
+  const textEl = document.getElementById('copyText');
+  if (!tmpl || !btn) return;
+  navigator.clipboard.writeText(tmpl.textContent.trim())
+    .then(() => {
+      btn.classList.add('copied');
+      iconEl.textContent = '✅';
+      textEl.textContent = 'コピーしました！';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        iconEl.textContent = '📋';
+        textEl.textContent = 'テンプレをコピー';
+      }, 2200);
+    })
+    .catch(() => {
+      const range = document.createRange();
+      range.selectNode(tmpl);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+      iconEl.textContent = '✅';
+      textEl.textContent = 'コピーしました！';
+      setTimeout(() => {
+        iconEl.textContent = '📋';
+        textEl.textContent = 'テンプレをコピー';
+      }, 2200);
+    });
+}
 </script>
 </body>
 </html>
