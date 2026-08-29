@@ -917,3 +917,40 @@ a.project:hover { background: var(--surface-tint); }
 .store-links a:hover { text-decoration: underline; }
 
 .channel-where.store-links { padding-top: 0; flex-direction: column; gap: 4px; }
+
+/* ダウンロード時の注意書き */
+.notice {
+  margin-top: 30px;
+  border: 1px solid var(--line);
+  background: var(--surface-tint);
+  padding: 22px 24px;
+}
+
+.notice h4 {
+  margin: 0 0 10px;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.notice p {
+  margin: 0 0 12px;
+  font-size: 13.5px;
+  line-height: 1.85;
+  color: var(--ink-soft);
+}
+
+.notice p:last-child { margin-bottom: 0; }
+
+.notice ol {
+  margin: 0 0 12px;
+  padding-left: 1.3em;
+  font-size: 13.5px;
+  line-height: 1.85;
+  color: var(--ink-soft);
+}
+
+.notice li { margin-bottom: 4px; }
+
+.notice a { color: var(--accent-deep); }
