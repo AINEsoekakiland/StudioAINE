@@ -1,0 +1,31 @@
+# ---- 作業用の素材 ----
+# サイトからは参照していないファイル。手元には残すが、公開リポジトリには載せない。
+# 後で実際に使うことになったら、その時点で個別に追加する
+#   （SourceTree で右クリック →「無視を解除」、または git add -f <ファイル名>）
+
+# 生成画像・下書き
+Gemini_Generated_Image_*.png
+6bdf611d3c196835.png
+fatehmuhammadraja-*.png
+ホーム画面*.png
+3dmodel003.png
+
+# 書き出し用 PDF
+*.pdf
+
+# ロゴ類（他社商標を含む。使う場面が来たら個別に判断する）
+blender_logo_kit/
+Figma Icon (Full-color).png
+Live2D logo square blue.png
+logo_2line_B.png
+Color Black.png
+
+# アイコンの素案
+アプリ用アイコンサムネ/
+導線アイコン.png
+ダウンロード.png
+
+# ---- OS が作るファイル ----
+Thumbs.db
+desktop.ini
+.DS_Store

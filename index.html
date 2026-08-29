@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="AINEのイラスト・アニメーション制作ポートフォリオ。キャラクターイラスト・モーショングラフィックスの受注承ります。">
-<meta name="google-site-verification" content="S6oX6g-sp69D97cRCi01wubVi97gXMfMN74i8r7G4N4" />
 <title>AINE — イラスト・アニメーション制作</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,700;0,800;0,900;1,800&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
@@ -443,6 +442,33 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
   transition: color .18s;
 }
 .contact-link-row:hover .cl-arrow { color: rgba(255,255,255,.8); }
+/* ═══ LIVE2D ═══ */
+.live2d-wrap {
+  position: relative;
+  overflow: hidden;
+}
+.live2d-wrap canvas {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 50%;
+  /* モデルが透過背景の場合そのまま活きる */
+}
+.live2d-fallback {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  transition: opacity .4s ease;
+}
+.live2d-fallback img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+}
+/* モデル読み込み後はフォールバックを隠す */
+.live2d-fallback.hidden { opacity: 0; pointer-events: none; }
 /* ═══ SIMULATOR ═══ */
 .sim-wrap{display:grid;grid-template-columns:1fr 300px;gap:28px;align-items:start;max-width:900px;margin:0 auto}
 .sim-group{margin-bottom:20px}
@@ -480,6 +506,12 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
 .template-btn-copy.copied{background:var(--green-bg);border-color:var(--green);color:var(--green)}
 .template-btn-x{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--ink);font-family:var(--f-d);font-weight:800;font-size:13px;padding:10px 18px;border-radius:var(--r-pill);transition:transform .15s,box-shadow .18s;flex:1;justify-content:center;white-space:nowrap}
 .template-btn-x:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.2)}
+
+/* ═══ はむ電エレクトリックアニメ ═══ */
+@keyframes elec1{0%,100%{opacity:1;transform:scale(1)}45%{opacity:.1;transform:scale(.7)}50%{opacity:1;transform:scale(1.2)}55%{opacity:.1}60%{opacity:1}}
+@keyframes elec2{0%,100%{opacity:.8;transform:scale(1)}30%{opacity:.05;transform:scale(.6)}35%{opacity:.8;transform:scale(1.1)}70%{opacity:.1}75%{opacity:.8}}
+@keyframes glowPulse{0%,100%{opacity:.6}50%{opacity:1}}
+@keyframes hamFloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-8px) rotate(2deg)}}
 
 /* ═══ 固定CTAボタン ═══ */
 .fixed-cta{position:fixed;bottom:24px;right:24px;z-index:400;opacity:0;transform:translateY(16px);transition:opacity .4s ease,transform .4s ease;pointer-events:none}
@@ -559,9 +591,13 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
   </div>
 
   <div class="hero-visual" aria-hidden="true">
-    <!-- キャラクターイラスト枠 -->
-    <div class="hero-circle">
-      <img src="./HPicon.png" alt="AINEキャラクターイラスト">
+    <!-- Live2D キャンバス枠 -->
+    <div class="hero-circle live2d-wrap" id="live2dWrap">
+      <canvas id="live2dCanvas"></canvas>
+      <!-- モデル読み込み前のフォールバック -->
+      <div class="live2d-fallback" id="live2dFallback">
+        <img src="./HPicon.png" alt="AINEキャラクターイラスト">
+      </div>
     </div>
   </div>
 
@@ -742,7 +778,7 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
       </div>
       <div class="g-card reveal">
         <div class="g-thumb">
-          <img src="./3dmodel002.jpeg" alt="メタバースゲーム用3Dモデル" style="width:100%;height:100%;object-fit:cover">
+          <img src="./3dmodel002.jpg" alt="メタバースゲーム用3Dモデル" style="width:100%;height:100%;object-fit:cover">
         </div>
         <div class="g-info">
           <div class="g-title">メタバースゲーム用モデル</div>
@@ -787,36 +823,32 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
         </div>
       </div>
 
-      <!-- 月曜をラクにする研究所 LP -->
-      <a href="https://ainesoekakiland.github.io/mondaylab/" target="_blank" rel="noopener" class="g-card reveal" style="text-decoration:none;color:inherit">
-        <div class="g-thumb g-thumb-web" style="position:relative;overflow:hidden;background:#0a0a12;display:flex;align-items:center;justify-content:center">
-          <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,#0e1a2e 0%,#0a0a12 100%)"></div>
-          <!-- 星空風ドット -->
-          <div style="position:absolute;inset:0;overflow:hidden">
-            <div style="position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;top:15%;left:20%;opacity:.6;animation:floatY 4s ease-in-out infinite"></div>
-            <div style="position:absolute;width:1.5px;height:1.5px;background:#fff;border-radius:50%;top:30%;left:70%;opacity:.4;animation:floatY 5s ease-in-out 1s infinite"></div>
-            <div style="position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;top:55%;left:45%;opacity:.5;animation:floatY 6s ease-in-out 2s infinite"></div>
-            <div style="position:absolute;width:1px;height:1px;background:#fff;border-radius:50%;top:20%;left:85%;opacity:.3;animation:floatY 7s ease-in-out .5s infinite"></div>
-            <div style="position:absolute;width:1.5px;height:1.5px;background:#fff;border-radius:50%;top:70%;left:25%;opacity:.4;animation:floatY 5.5s ease-in-out 1.5s infinite"></div>
+      <!-- はむ電 Coming Soon -->
+      <div class="g-card reveal">
+        <div class="g-thumb g-thumb-web" style="position:relative;overflow:hidden;background:#1a1a2e;display:flex;align-items:center;justify-content:center">
+          <div style="position:absolute;inset:0;background:#1a1a2e"></div>
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;padding:8px;opacity:.5">
+            <span style="font-size:18px;animation:elec1 1.4s ease-in-out infinite">⚡</span>
+            <span style="font-size:12px;animation:elec2 1.1s ease-in-out .3s infinite">⚡</span>
+            <span style="font-size:16px;animation:elec1 1.7s ease-in-out .6s infinite">⚡</span>
+            <span style="font-size:10px;animation:elec2 1.3s ease-in-out .2s infinite">⚡</span>
+            <span style="font-size:20px;animation:elec1 1.5s ease-in-out .8s infinite">⚡</span>
+            <span style="font-size:14px;animation:elec2 1.2s ease-in-out .4s infinite">⚡</span>
           </div>
-          <!-- 中央テキスト -->
-          <div style="position:relative;z-index:2;text-align:center;padding:16px">
-            <div style="font-family:'Nunito',sans-serif;font-weight:400;font-size:9px;letter-spacing:.28em;color:rgba(180,200,230,.5);text-transform:uppercase;margin-bottom:10px">Night Observatory</div>
-            <div style="font-family:'Noto Sans JP',sans-serif;font-weight:500;font-size:clamp(13px,2.2vw,17px);color:rgba(220,230,245,.9);line-height:1.5;letter-spacing:.08em">月曜をラクにする<br>研究所</div>
-            <div style="margin-top:10px;font-family:'Noto Sans JP',sans-serif;font-size:10px;color:rgba(160,180,210,.45);line-height:1.6">評価しない。急がせない。<br>夜に呼吸を戻す場所。</div>
-          </div>
-          <!-- テスト中バッジ -->
-          <div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);z-index:3;background:rgba(120,160,220,.12);border:1.5px solid rgba(120,160,220,.35);border-radius:999px;padding:3px 14px;font-family:'Nunito',sans-serif;font-weight:700;font-size:10px;color:rgba(150,185,235,.8);letter-spacing:.1em;white-space:nowrap">Closed Testing</div>
+          <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(255,220,50,.18) 0%,transparent 70%);animation:glowPulse 1.5s ease-in-out infinite"></div>
+          <img src="./ham01.png" alt="はむ電キャラクター" style="position:relative;z-index:2;width:60%;height:60%;object-fit:contain;animation:hamFloat 3s ease-in-out infinite;filter:drop-shadow(0 0 12px rgba(255,220,50,.8))">
+          <div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);z-index:3;background:rgba(255,220,50,.15);border:1.5px solid rgba(255,220,50,.5);border-radius:999px;padding:3px 14px;font-family:'Nunito',sans-serif;font-weight:800;font-size:10px;color:#ffd632;letter-spacing:.12em;white-space:nowrap">Coming Soon</div>
         </div>
         <div class="g-info">
-          <div class="g-title">月曜をラクにする研究所 <span class="g-self-badge">テスト中</span></div>
+          <div class="g-title">はむ電 <span class="g-self-badge">制作中</span></div>
           <div class="g-tags">
-            <span class="g-tag">Webアプリ</span>
-            <span class="g-tag">LP制作</span>
-            <span class="g-tag">メンタルヘルス</span>
+            <span class="g-tag">ゲーム</span>
+            <span class="g-tag">Android</span>
+            <span class="g-tag">iOS</span>
+            <span class="g-tag">クリッカー</span>
           </div>
         </div>
-      </a>
+      </div>
 
     </div>
   </div>
@@ -1117,7 +1149,302 @@ footer{background:var(--marine-900);border-top:1px solid rgba(74,160,213,.12);pa
   <a href="#contact">✉ 受注のご依頼はこちら</a>
 </div>
 
+<script>
+/* ── ハンバーガー ── */
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobileNav');
+hamburger.addEventListener('click', () => {
+  const open = mobileNav.classList.toggle('open');
+  hamburger.classList.toggle('open', open);
+  hamburger.setAttribute('aria-expanded', String(open));
+  document.body.style.overflow = open ? 'hidden' : '';
+});
+function closeMobileNav() {
+  mobileNav.classList.remove('open');
+  hamburger.classList.remove('open');
+  hamburger.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && mobileNav.classList.contains('open')) closeMobileNav();
+});
 
+/* ── ギャラリータブ ── */
+const tabs  = document.querySelectorAll('.g-tab');
+const grids = document.querySelectorAll('.gallery-grid');
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+    grids.forEach(g => g.classList.add('hidden'));
+    tab.classList.add('active');
+    tab.setAttribute('aria-selected', 'true');
+    const target = document.getElementById('grid-' + tab.dataset.tab);
+    if (!target) return;
+    target.classList.remove('hidden');
+    Array.from(target.querySelectorAll('.g-card')).forEach((c, i) => {
+      c.style.opacity = '0';
+      c.style.transform = 'translateY(14px)';
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          c.style.transition = 'opacity .38s ease, transform .38s ease';
+          c.style.opacity = '1';
+          c.style.transform = 'none';
+        }, i * 65);
+      });
+    });
+  });
+});
+
+/* ── スクロールリビール ── */
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const idx = Array.from(e.target.parentElement?.children ?? []).indexOf(e.target);
+    setTimeout(() => e.target.classList.add('vis'), Math.min(idx * 75, 280));
+    revealObs.unobserve(e.target);
+  });
+}, { threshold: 0.07 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+/* ── スムーススクロール ── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (!t) return;
+    e.preventDefault();
+    t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    closeMobileNav();
+  });
+});
+
+/* ── アクティブナビ ── */
+const navLinks = document.querySelectorAll('header nav a');
+new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting)
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+  });
+}, { threshold: 0.4 }).observe; // sections below
+document.querySelectorAll('section[id]').forEach(s => {
+  new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting)
+        navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+    });
+  }, { threshold: 0.4 }).observe(s);
+});
+
+/* ── フローティングCTA ── */
+const floatCta = document.getElementById('floatCta');
+const pricing  = document.getElementById('pricing');
+if (floatCta && pricing) {
+  new IntersectionObserver(([e]) => {
+    floatCta.style.opacity       = e.isIntersecting ? '0' : '1';
+    floatCta.style.pointerEvents = e.isIntersecting ? 'none' : 'all';
+  }, { threshold: 0.1 }).observe(pricing);
+}
+</script>
+
+<!--
+  ╔══════════════════════════════════════════════════════╗
+  ║  Live2D 埋め込みスクリプト                            ║
+  ║  GitHub Pages に公開するときに有効になります           ║
+  ║                                                      ║
+  ║  【準備するフォルダ構成】                              ║
+  ║  your-repo/                                          ║
+  ║  ├ index.html                                        ║
+  ║  ├ HPicon.png                                        ║
+  ║  └ live2d/                                           ║
+  ║      ├ AINE.moc3                                     ║
+  ║      ├ AINE.model3.json   ← パスをここに設定          ║
+  ║      ├ AINE.physics3.json                            ║
+  ║      ├ textures/                                     ║
+  ║      │   └ texture_00.png                            ║
+  ║      └ motions/                                      ║
+  ║          └ *.motion3.json                            ║
+  ╚══════════════════════════════════════════════════════╝
+-->
+<script>
+/* ════════════════════════════════════════
+   ★ ここだけ変更してください
+   モデルの model3.json への相対パス
+════════════════════════════════════════ */
+const LIVE2D_MODEL_PATH = './live2d/AINE.model3.json';
+
+/* ── Live2D 初期化 (pixi-live2d-display) ── */
+(async () => {
+  const fallback = document.getElementById('live2dFallback');
+  const wrap     = document.getElementById('live2dWrap');
+  const canvas   = document.getElementById('live2dCanvas');
+
+  // PixiJS + pixi-live2d-display を動的ロード
+  try {
+    // PixiJS v7
+    await loadScript('https://cdn.jsdelivr.net/npm/pixi.js@7/dist/pixi.min.js');
+    // pixi-live2d-display
+    await loadScript('https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism4.min.js');
+  } catch (e) {
+    console.warn('Live2D ライブラリの読み込みに失敗しました:', e);
+    return; // フォールバック画像のまま表示
+  }
+
+  // PIXI が使えるか確認
+  if (typeof PIXI === 'undefined' || !PIXI.live2d) {
+    console.warn('PIXI.live2d が見つかりません');
+    return;
+  }
+
+  // キャンバスサイズをラッパーに合わせる
+  const size = wrap.offsetWidth;
+  canvas.width  = size;
+  canvas.height = size;
+
+  // Pixi アプリ作成（透過背景）
+  const app = new PIXI.Application({
+    view: canvas,
+    width: size,
+    height: size,
+    transparent: true,
+    backgroundAlpha: 0,
+    antialias: true,
+    resolution: window.devicePixelRatio || 1,
+    autoDensity: true,
+  });
+
+  // モデル読み込み
+  let model;
+  try {
+    model = await PIXI.live2d.Live2DModel.from(LIVE2D_MODEL_PATH);
+  } catch (e) {
+    console.warn('Live2D モデルの読み込みに失敗しました。パスを確認してください:', LIVE2D_MODEL_PATH);
+    return; // フォールバック画像のまま
+  }
+
+  app.stage.addChild(model);
+
+  // モデルをキャンバス中央に収める
+  const scale = Math.min(size / model.width, size / model.height) * 0.9;
+  model.scale.set(scale);
+  model.x = (size - model.width  * scale) / 2;
+  model.y = (size - model.height * scale) / 2;
+
+  // マウス・タッチ追従（目線がカーソルを向く）
+  document.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    const cx   = rect.left + rect.width  / 2;
+    const cy   = rect.top  + rect.height / 2;
+    const dx   = (e.clientX - cx) / (window.innerWidth  / 2);
+    const dy   = (e.clientY - cy) / (window.innerHeight / 2);
+    model.focus(e.clientX, e.clientY);
+  });
+
+  // タップでランダムモーション再生
+  canvas.addEventListener('pointerdown', () => {
+    model.motion('tap_body');
+  });
+
+  // 読み込み成功 → フォールバック画像を隠す
+  fallback.classList.add('hidden');
+
+  // リサイズ対応
+  window.addEventListener('resize', () => {
+    const s = wrap.offsetWidth;
+    app.renderer.resize(s, s);
+    const sc = Math.min(s / model.internalModel.originalWidth,
+                        s / model.internalModel.originalHeight) * 0.9;
+    model.scale.set(sc);
+    model.x = (s - model.internalModel.originalWidth  * sc) / 2;
+    model.y = (s - model.internalModel.originalHeight * sc) / 2;
+  });
+})();
+
+// script タグを動的に追加するヘルパー
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    if (document.querySelector(`script[src="${src}"]`)) { resolve(); return; }
+    const s = document.createElement('script');
+    s.src = src; s.async = true;
+    s.onload = resolve;
+    s.onerror = () => reject(new Error(`Failed to load: ${src}`));
+    document.head.appendChild(s);
+  });
+}
+
+/* ════════════════════════════════════════
+   ギャラリー用 Live2D
+   アニメタブを開いたとき1回だけ初期化
+════════════════════════════════════════ */
+let galleryLive2dReady = false;
+
+async function initGalleryLive2d() {
+  if (galleryLive2dReady) return;
+  galleryLive2dReady = true;
+
+  const canvas   = document.getElementById('galleryLive2dCanvas');
+  const fallback = document.getElementById('galleryLive2dFallback');
+  const badge    = document.getElementById('galleryLive2dBadge');
+  const card     = document.getElementById('galleryLive2dCard');
+  if (!canvas) return;
+
+  try {
+    await loadScript('https://cdn.jsdelivr.net/npm/pixi.js@7/dist/pixi.min.js');
+    await loadScript('https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/cubism4.min.js');
+  } catch(e) { return; }
+
+  if (typeof PIXI === 'undefined' || !PIXI.live2d) return;
+
+  const size = canvas.parentElement.offsetWidth;
+  canvas.width  = size;
+  canvas.height = size;
+
+  const app = new PIXI.Application({
+    view: canvas,
+    width: size, height: size,
+    transparent: true, backgroundAlpha: 0,
+    antialias: true,
+    resolution: window.devicePixelRatio || 1,
+    autoDensity: true,
+  });
+
+  let model;
+  try {
+    model = await PIXI.live2d.Live2DModel.from(LIVE2D_MODEL_PATH);
+  } catch(e) { return; }
+
+  app.stage.addChild(model);
+
+  const sc = Math.min(size / model.width, size / model.height) * 0.88;
+  model.scale.set(sc);
+  model.x = (size - model.width  * sc) / 2;
+  model.y = (size - model.height * sc) / 2;
+
+  // マウス追従
+  card.addEventListener('mousemove', e => model.focus(e.clientX, e.clientY));
+  // タップでモーション
+  canvas.addEventListener('pointerdown', () => model.motion('tap_body'));
+
+  // 成功 → フォールバック非表示・LIVEバッジ表示
+  if (fallback) fallback.style.display = 'none';
+  if (badge)   badge.style.display = 'block';
+
+  window.addEventListener('resize', () => {
+    const s = card.offsetWidth;
+    app.renderer.resize(s, s);
+    const sc2 = Math.min(s / model.internalModel.originalWidth,
+                         s / model.internalModel.originalHeight) * 0.88;
+    model.scale.set(sc2);
+    model.x = (s - model.internalModel.originalWidth  * sc2) / 2;
+    model.y = (s - model.internalModel.originalHeight * sc2) / 2;
+  });
+}
+
+// アニメタブが押されたときに呼び出す
+document.querySelectorAll('.g-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    if (tab.dataset.tab === 'anim') initGalleryLive2d();
+  });
+});
+</script>
 <!-- 固定CTAボタン（PC右下） -->
 <div class="fixed-cta" id="fixedCta">
   <a href="#contact">✉ ご依頼はこちら</a>
