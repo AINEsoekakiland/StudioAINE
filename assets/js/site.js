@@ -1,7 +1,7 @@
 /* ============================================================
    Studio AINE
-   ページの動きは2つだけ。モバイルメニューの開閉と、作品の絞り込み。
-   どちらも該当要素が無ければ何もしない作りにしてある。
+   ページの動きはモバイルメニューの開閉だけ。
+   該当要素が無ければ何もしない作りにしてある。
    ============================================================ */
 
 (function () {
@@ -26,24 +26,4 @@
     });
   }
 
-  /* ---- 作品の絞り込み ---- */
-
-  var filters = document.querySelectorAll(".filter");
-  var works = document.querySelectorAll(".work");
-
-  if (filters.length && works.length) {
-    filters.forEach(function (button) {
-      button.addEventListener("click", function () {
-        var wanted = button.dataset.filter;
-
-        filters.forEach(function (b) {
-          b.setAttribute("aria-pressed", b === button ? "true" : "false");
-        });
-
-        works.forEach(function (work) {
-          work.hidden = wanted !== "all" && work.dataset.category !== wanted;
-        });
-      });
-    });
-  }
 })();
