@@ -835,6 +835,15 @@ a.project:hover { background: var(--surface-tint); }
 
 .brand-project-head .project-more:hover { text-decoration: underline; }
 
+.brand-project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 26px;
+  margin: 18px 0 0;
+}
+
+.brand-project-links .project-more { margin-top: 0; }
+
 .brand-children {
   border-top: 1px solid var(--line);
   background: var(--surface-tint);
